@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSI - Persian</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header styling */
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            letter-spacing: 1px;
+        }
+
+        /* Video grid container with fixed column count */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Define a fixed number of columns */
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* Styling for each video container */
+        .video-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Video container hover effect */
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive design: Adjust grid columns on smaller screens */
+        @media (max-width: 600px) {
+            .video-grid {
+                grid-template-columns: 1fr; /* On very small screens, only one video per row */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>OSI - Persian</h1>
+    </header>
+
+    <!-- Video Grid Section -->
+    <div class="video-grid">
+        <div class="video-container">
+            <video id="video1" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video2" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video3" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video4" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video5" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video7" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video8" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video10" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video11" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video12" controls autoplay></video>
+        </div>
+        <div class="video-container">
+            <video id="video15" controls autoplay></video>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy Kamel Ibraheem - Praepositi 2024</p>
+    </footer>
+
+    <script>
+        // Streaming URLs
+        var streams = [
+            'http://vs-hls-pushb-ww.live.cf.md.bbci.co.uk/x=4/i=urn:bbc:pips:service:bbc_persian_tv/mobile_wifi_main_sd_abr_v2.m3u8',
+            'https://voa-ingest.akamaized.net/hls/live/2033876/tvmc07/playlist.m3u8',
+            'http://vs-hls-pushb-ww.live.cf.md.bbci.co.uk/x=4/i=urn:bbc:pips:service:bbc_persian_tv/mobile_wifi_main_sd_abr_v2.m3u8',
+            'https://live.playstop.me/1816184091/index.m3u8',
+            'https://shls-mbcpersia-prod-dub.shahid.net/out/v1/bdc7cd0d990e4c54808632a52c396946/index.m3u8',
+            'http://jawaltv.com/player/video/live/playlist.m3u8',
+            'https://live.aionet.ir/hls/tv1/tv1.m3u8',
+            'https://live.aionet.ir/hls/tv2/tv2.m3u8',
+            'https://live.aionet.ir/hls/tv3/tv3.m3u8',
+            'https://live.aionet.ir/hls/tv4/tv4.m3u8',
+            'https://live.aionet.ir/hls/tv5/tv5.m3u8',
+            'https://simaytv.akamaized.net/hls/live/2043550/simayhls/index.m3u8',
+            'http://jawaltv.com/player/video/live/playlistm3u8',
+            'http://jawaltv.com/player/video/live/playlist.m3u8',
+            'https://itnhls.wns.live/hls/stream.m3u8',
+            'http://jawaltv.com/player/video/live/playlist.m3u8',
+            'http://jawaltv.com/player/video/live/playlist.m3u8'
+        ];
+
+        // Loop through each video and set the HLS stream
+        streams.forEach(function (stream, index) {
+            var video = document.getElementById('video' + (index + 1));
+
+            if (Hls.isSupported()) {
+                var hls = new Hls();
+                hls.loadSource(stream);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play();
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = stream;
+                video.play();
+            }
+        });
+    </script>
+
+</body>
+</html>
